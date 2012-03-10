@@ -16,6 +16,14 @@
        (finally
         (~close-fn ~(binding 0))))))
 
+(defn get-message
+  "Based on the function in kafka.examples.ExampleUtils."
+  [m]
+  (let [buffer (.payload m)
+        bytes  (byte-array (.remaining buffer))]
+    (.get buffer bytes)
+    bytes))
+
 (defprotocol ToClojure
   (to-clojure [x] "Converts type to Clojure structure"))
 
@@ -25,5 +33,5 @@
                    :offset (.offset x)})
   Message
   (to-clojure [x] {:crc (.checksum x)
-                   :payload (.array (.payload x))
+                   :payload (get-message x)
                    :size (.size x)}))
