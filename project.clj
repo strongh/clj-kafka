@@ -1,4 +1,4 @@
-(defproject org.clojars.strongh/clj-kafka "0.0.2-0.7-SNAPSHOT"
+(defproject org.clojars.strongh/clj-kafka "0.1.0-0.7-SNAPSHOT"
   :description "Clojure wrapper for Kafka's Java API"
   :dependencies [[org.clojure/clojure "1.3.0"]
                  [org.clojars.paul/core-kafka_2.8.0 "0.7.0-1" :exclusions [javax.mail/mail
