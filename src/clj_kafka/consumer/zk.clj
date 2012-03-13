@@ -35,7 +35,9 @@
 (defn messages
   "Creates a sequence of messages"
   [consumer topic]
-  (let [topic-map {topic (Integer/valueOf 1)}
-        streams (.createMessageStreams consumer topic-map)
-        stream (first (.get streams topic))]
-    (map to-clojure (iterator-seq (.iterator stream)))))
+  (let [topic-map   {topic (Integer/valueOf 1)}
+        streams     (.createMessageStreams consumer topic-map)
+        iter-stream (.iterator (first (.get streams topic)))]
+    (map #(if % (to-clojure %))
+         (repeatedly #(if (.hasNext iter-stream)
+                        (.next iter-stream))))))
