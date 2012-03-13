@@ -27,6 +27,11 @@
   [consumer]
   (.shutdown consumer))
 
+(defn commit-offsets
+  "Manually commit consumed message offsets for the given consumer."
+  [consumer]
+  (.commitOffsets consumer))
+
 (defn messages
   "Creates a sequence of messages"
   [consumer topic]
