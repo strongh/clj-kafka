@@ -10,7 +10,7 @@
    (with-resource [c (consumer m)]
      shutdown
      (take 5 (messages c \"test\")))
-  
+
    Keys:
    zk.connect             : host:port for Zookeeper. e.g: 127.0.0.1:2181
    groupid                : consumer group. e.g. group1
@@ -26,6 +26,17 @@
   "Closes the connection to Zookeeper and stops consuming messages."
   [consumer]
   (.shutdown consumer))
+
+(defmacro with-consumer
+  "Executes the body, after creating the consumer given in bindings. After the
+  body has finished, the consumer will be shutdown automatically."
+  [bindings & body]
+  {:pre [(vector? bindings) (= (count bindings) 2)]}
+  `(let ~bindings
+     (try
+       (do ~@body)
+       (finally
+         (shutdown ~(bindings 0))))))
 
 (defn commit-offsets
   "Manually commit consumed message offsets for the given consumer."
