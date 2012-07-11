@@ -59,11 +59,10 @@ The Zookeeper consumer uses broker information contained within Zookeeper to con
 (use 'clj-kafka.consumer.zk)
 (use 'clj-kafka.core)
 
-(def config {"zk.connect" "localhost:2181" 
+(def config {"zk.connect" "localhost:2181"
              "groupid"    "my-task-group"})
 
-(with-resource [c (consumer config)]
-  shutdown
+(with-consumer [c (consumer config)]
   (take 5 (messages c "test")))
 
 ({:crc 3417370184, :payload #<byte[] [B@698b41da>, :size 22} {:crc 3417370184, :payload #<byte[] [B@698b41da>, :size 22} {:crc 960674935, :payload #<byte[] [B@698b41da>, :size 86} {:crc 3651343620, :payload #<byte[] [B@698b41da>, :size 20} {:crc 2012604996, :payload #<byte[] [B@698b41da>, :size 20})

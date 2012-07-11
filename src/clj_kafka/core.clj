@@ -8,14 +8,6 @@
     (doseq [[n v] m] (.setProperty props n v))
     props))
 
-(defmacro with-resource
-  [binding close-fn & body]
-  `(let ~binding
-     (try
-       (do ~@body)
-       (finally
-        (~close-fn ~(binding 0))))))
-
 (defn get-message
   "Based on the function in kafka.examples.ExampleUtils."
   [m]
